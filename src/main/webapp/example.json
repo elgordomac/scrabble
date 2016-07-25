@@ -1,0 +1,1111 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Example API",
+        "description": "An example API that provides a range of features for testing or demoing.",
+        "version": "2.0"
+    },
+    "schemes": ["https", "http"],
+    "basePath": "/api/example/v2/",
+    "produces": ["application/json"],
+    "paths": {
+        "first": {
+            "get": {
+                "summary": "Simple GET with url parameters",
+                "description": "Build a simple get request with URL parameters",
+                "parameters": [{
+                        "name": "a",
+                        "in": "query",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "query",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "second": {
+            "post": {
+                "summary": "Simple POST with url parameters",
+                "description": "A simple POST with url parameters, an uncommon use case",
+                "parameters": [{
+                        "name": "a",
+                        "in": "query",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "query",
+                        "description": "The value of b, a mandatory integer parameter",
+                        "required": true,
+                        "type": "integer",
+                        "format": "number"
+                    }, {
+                        "name": "c",
+                        "in": "query",
+                        "description": "The value of c",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "third": {
+            "post": {
+                "summary": "POST using parameters in the body",
+                "description": "A simple POST with parameters in the body",
+                "parameters": [{
+                        "name": "a",
+                        "in": "body",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "body",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "integer",
+                        "format": "number"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "forth": {
+            "post": {
+                "summary": "POST using a body and schema",
+                "description": "A simple POST using a body and schemas",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "The body of the request which is mandatory and should confirm to the schema",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "a": {
+                                    "type": "string"
+                                },
+                                "b": {
+                                    "description": "The value of b, a natural number",
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": ["a"]
+                        }
+                    }],
+                "examples": [{
+                        "name": "Minimal",
+                        "description": "Minimal example, only mandatory fields populated",
+                        "parameters": {
+                            "body": {
+                                "a": "hello"
+                            }
+                        }
+                    }, {
+                        "name": "Full",
+                        "description": "Full example, all fields populated",
+                        "parameters": {
+                            "body": {
+                                "a": "hello",
+                                "b": 3
+                            }
+                        }
+                    }, {
+                        "name": "Invalid",
+                        "description": "Fails schema validation",
+                        "parameters": {
+                            "body": {
+                                "b": "abcdef"
+                            }
+                        }
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "title": "Query result",
+                            "type": "object",
+                            "properties": {
+                                "c": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["c"]
+                        }
+                    }
+                }
+            }
+        },
+        "fifth": {
+            "post": {
+                "summary": "POST using a template body",
+                "description": "A POST using a template to build the request",
+                "template": {
+                    "a": "@@a@@",
+                    "subsection": {
+                        "b": "@@b@@"
+                    }
+                },
+                "parameters": [{
+                        "name": "a",
+                        "in": "body",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "body",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "integer",
+                        "format": "number"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "sixth": {
+            "post": {
+                "summary": "POST using XML example",
+                "description": "A POST using XML examples",
+                "examples": [{
+                        "name": "Sample One String",
+                        "type": "application/soap+xml",
+                        "request": "<request><a>banana</a></request>",
+                        "headers": {
+                            "SOAPAction": "http://tempuri.org/IServiceDisclosureExternal/CreateDisclosure"
+                        }
+                    }, {
+                        "name": "Sample Two Strings",
+                        "type": "application/soap+xml",
+                        "request": "<request><a>peach</a><b>cling</b></request>"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Dodd Frank result"
+                    }
+                }
+            }
+        },
+        "seventh": {
+            "post": {
+                "summary": "POST using parameters, some with defaults",
+                "description": "A POST using parameters, some with defaults",
+                "parameters": [{
+                        "name": "a",
+                        "in": "body",
+                        "description": "The value of a",
+                        "required": true,
+                        "type": "boolean",
+                        "format": "boolean"
+                    }, {
+                        "name": "b",
+                        "in": "body",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "string",
+                        "format": "string",
+                        "enum": ["1", "2", "3"]
+                    }, {
+                        "name": "c",
+                        "in": "body",
+                        "description": "The value of c",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "d",
+                        "in": "body",
+                        "description": "The value of d, a boolean defaulted to false",
+                        "required": true,
+                        "type": "boolean",
+                        "format": "boolean",
+                        "default": "false"
+                    }, {
+                        "name": "e",
+                        "in": "body",
+                        "description": "The value of e, an enum defaulted to 2",
+                        "required": false,
+                        "type": "integer",
+                        "format": "number",
+                        "enum": ["1", "2", "3"],
+                        "default": "2"
+                    }, {
+                        "name": "f",
+                        "in": "body",
+                        "description": "The value of f, a string defaulted to banana",
+                        "required": false,
+                        "type": "string",
+                        "minLength": 3,
+                        "maxLength": 12,
+                        "format": "string",
+                        "default": "banana"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "eighth": {
+            "post": {
+                "summary": "POST using both query parameters and body parameters",
+                "description": "A POST using both query parameters and body parameters",
+                "parameters": [{
+                        "name": "a",
+                        "in": "query",
+                        "description": "The value of a, passed in the url",
+                        "required": true,
+                        "type": "string"
+                    }, {
+                        "name": "b",
+                        "in": "query",
+                        "description": "The value of b, passed in the url",
+                        "required": false,
+                        "type": "string"
+                    }, {
+                        "name": "c",
+                        "in": "body",
+                        "description": "The value of c, in the body",
+                        "required": true,
+                        "type": "string"
+                    }, {
+                        "name": "d",
+                        "in": "body",
+                        "description": "The value of d, in the body",
+                        "required": false,
+                        "type": "string"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "ninth": {
+            "post": {
+                "summary": "POST using both query parameters and a request body",
+                "description": "A POST using both query parameters and a request body",
+                "parameters": [{
+                        "name": "a",
+                        "in": "query",
+                        "description": "The value of a, passed in the url",
+                        "required": true,
+                        "type": "string"
+                    }, {
+                        "name": "b",
+                        "in": "query",
+                        "description": "The value of b, passed in the url",
+                        "required": false,
+                        "type": "string"
+                    }, {
+                        "name": "body",
+                        "in": "body",
+                        "description": "The body of the request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "wait": {
+            "post": {
+                "summary": "Simulate a slow running API",
+                "description": "Used to simulate a long running or slow API the response will be returned after the specified time",
+                "parameters": [{
+                        "name": "time",
+                        "in": "body",
+                        "description": "The time to sleep for in seconds",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Sleeping complete"
+                    }
+                }
+            }
+        },
+        "header": {
+            "post": {
+                "summary": "POST using header parameters",
+                "description": "A simple POST with a parameter in the body and one in the header",
+                "parameters": [{
+                        "name": "a",
+                        "in": "body",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "header",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "integer",
+                        "format": "number"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "square/{number}": {
+            "get": {
+                "summary": "Squares a given number",
+                "description": "Returns the square of a given number",
+                "parameters": [{
+                        "name": "number",
+                        "in": "query",
+                        "description": "The number to square",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "The square of the number"
+                    }
+                }
+            }
+        },
+        "analyze": {
+            "get": {
+                "summary": "Analyzes a given string",
+                "description": "Analyzes an input string and returns some details about it including length, number of vowels etc",
+                "parameters": [{
+                        "name": "string",
+                        "in": "query",
+                        "description": "The string to analyze",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "examples": [{
+                        "name": "Hello example",
+                        "description": "An example using the word hello",
+                        "parameters": {
+                            "string": "Hello!"
+                        }
+                    }, {
+                        "name": "Long example",
+                        "description": "An example using a long word",
+                        "parameters": {
+                            "string": "subdermatoglyphic"
+                        }
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "The analysis output"
+                    }
+                }
+            }
+        },
+        "whoami": {
+            "get": {
+                "summary": "Identify the Janus user",
+                "description": "Echos back the janus_user header",
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Janus user"
+                    }
+                }
+            }
+        },
+        "ugly": {
+            "post": {
+                "summary": "An API with really awkwardly long field names that challenges the layout engine",
+                "description": "A simple POST using a body and schemas",
+                "parameters": [{
+                        "name": "shortfield",
+                        "in": "query",
+                        "description": "The string to analyze",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "mediumlengthfield",
+                        "in": "query",
+                        "description": "The string to analyze",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "reallyreallyreallyreallylongfield",
+                        "in": "query",
+                        "description": "The string to analyze",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "stupidlyloooooooooooooooooooooooooooooooooooooooooooooooooooongfield",
+                        "in": "query",
+                        "description": "The string to analyze",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "body",
+                        "in": "body",
+                        "description": "The body of the request and a description which contains stupidly loooooooooooooooooooooooooooooooooooooooooooooooong words that we need to handle",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "shortfield": {
+                                    "type": "string"
+                                },
+                                "reallyreallyreallyreallylongfield": {
+                                    "description": "The really long field",
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["shortfield"]
+                        }
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "title": "Query result",
+                            "type": "object",
+                            "properties": {
+                                "c": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["c"]
+                        }
+                    }
+                }
+            }
+        },
+        "types": {
+            "post": {
+                "summary": "Check the validation of different data types",
+                "description": "Check the validation of different data types by using the various examples",
+                "parameters": [{
+                        "name": "integer",
+                        "in": "query",
+                        "description": "Signed 32 bits",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }, {
+                        "name": "long",
+                        "in": "query",
+                        "description": "Signed 64 bits",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }, {
+                        "name": "float",
+                        "in": "query",
+                        "description": "A float value",
+                        "required": true,
+                        "type": "number",
+                        "format": "float"
+                    }, {
+                        "name": "double",
+                        "in": "query",
+                        "description": "A double value",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }, {
+                        "name": "string",
+                        "in": "query",
+                        "description": "A string value",
+                        "required": true,
+                        "type": "string"
+                    }, {
+                        "name": "byte",
+                        "in": "query",
+                        "description": "base64 encoded characters",
+                        "required": true,
+                        "type": "string",
+                        "format": "byte"
+                    }, {
+                        "name": "binary",
+                        "in": "query",
+                        "description": "Any sequence of octets",
+                        "required": true,
+                        "type": "string",
+                        "format": "binary"
+                    }, {
+                        "name": "boolean",
+                        "in": "query",
+                        "description": "Simple true/false boolean value",
+                        "required": true,
+                        "type": "boolean"
+                    }, {
+                        "name": "date",
+                        "in": "query",
+                        "description": "As defined by full-date RFC3339",
+                        "required": true,
+                        "type": "string",
+                        "format": "date"
+                    }, {
+                        "name": "dateTime",
+                        "in": "query",
+                        "description": "As defined by date-time RFC3339",
+                        "required": true,
+                        "type": "string",
+                        "format": "date-time"
+                    }, {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Used to hint UIs the input needs to be obscured",
+                        "required": true,
+                        "type": "string",
+                        "format": "password"
+                    }],
+                "examples": [{
+                        "name": "All correct",
+                        "description": "All the parameters should pass validation",
+                        "parameters": {
+                            "integer": "2147483647",
+                            "long": "9223372036854775807",
+                            "float": "3.1456",
+                            "double": "3.1456",
+                            "string": "apple",
+                            "byte": "TWFuIGlzIGRpc3Rpbmd1aXNoZWQ",
+                            "binary": "0x000x010x02",
+                            "boolean": "true",
+                            "date": "2015-04-01",
+                            "dateTime": "2015-04-01T11:25:45+05:00",
+                            "password": "monkey"
+                        }
+                    }, {
+                        "name": "All wrong v1",
+                        "description": "All parameters should fail validation",
+                        "parameters": {
+                            "integer": "bad",
+                            "long": "3434339223372036854775807",
+                            "float": "bad",
+                            "double": "bad",
+                            "string": "",
+                            "byte": "",
+                            "binary": "banana",
+                            "boolean": "carrot",
+                            "date": "April fools",
+                            "dateTime": "11am on April fools",
+                            "password": ""
+                        }
+                    }],
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "The analysis output"
+                    }
+                }
+            }
+        },
+        "notry": {
+            "get": {
+                "summary": "A simple API with interactive testing disabled",
+                "description": "A simple API with interactive testing disabled",
+                "parameters": [{
+                        "name": "a",
+                        "in": "query",
+                        "description": "The value of a, a mandatory parameter",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }, {
+                        "name": "b",
+                        "in": "query",
+                        "description": "The value of b",
+                        "required": false,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "tryit": false,
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "notrybody": {
+            "post": {
+                "summary": "A more complex API with interactive testing disabled",
+                "description": "A more complex API with interactive testing disabled",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "The body of the request which is mandatory and should confirm to the schema",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "a": {
+                                    "type": "string"
+                                },
+                                "b": {
+                                    "description": "The value of b, a natural number",
+                                    "type": "integer",
+                                    "minimum": 0
+                                }
+                            },
+                            "required": ["a"]
+                        }
+                    }],
+                "tryit": false,
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "heterogenous": {
+            "get": {
+                "summary": "Returns objects of different types",
+                "description": "Returns objects of different types",
+                "parameters": [{
+                        "name": "id",
+                        "in": "query",
+                        "description": "The id of the thing. If the id is parseable as an java.lang.Integer it returns information about the number, otherwise it returns information about the string.",
+                        "required": true,
+                        "type": "string",
+                        "format": "string"
+                    }],
+                "tryit": false,
+                "tags": ["Queries"],
+                "responses": {
+                    "200": {
+                        "description": "Query result TBD"
+                    }
+                }
+            }
+        },
+        "noschema": {
+            "post": {
+                "summary": "No schema",
+                "description": "Tests that rendering works fine on a body with no schema",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "inline": {
+            "post": {
+                "summary": "Inline schema",
+                "description": "Tests that rendering works fine on a body with inlined schema (not $ref)",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "required": ["name"],
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schema": {
+            "post": {
+                "summary": "Basic schema",
+                "description": "Tests that rendering works fine on a response body with a simple schema",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "$ref": "#/definitions/Simple"
+                        }
+                    }
+                }
+            }
+        },
+        "nestedschema": {
+            "post": {
+                "summary": "Nested schema",
+                "description": "Tests that rendering works fine on a response body with a nested schema",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "$ref": "#/definitions/Nested"
+                        }
+                    }
+                }
+            }
+        },
+        "cyclic": {
+            "post": {
+                "summary": "Cyclic schema",
+                "description": "Tests that rendering works fine on a response body with a cyclic schema",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "$ref": "#/definitions/Descendant"
+                        }
+                    }
+                }
+            }
+        },
+        "arrays": {
+            "post": {
+                "summary": "Complex schema with arrays",
+                "description": "Tests that rendering works with a more complex schema, including arrays",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "$ref": "#/definitions/Phonebook"
+                        }
+                    }
+                }
+            }
+        },
+        "arrays_root": {
+            "post": {
+                "summary": "Schema with array at root",
+                "description": "Tests that rendering works with a more complex schema, including arrays",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Person"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "badreference": {
+            "post": {
+                "summary": "Bad reference",
+                "description": "Tests that rendering works fine on schema with a bad reference",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Schema Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result",
+                        "schema": {
+                            "$ref": "#/definitions/DoesNotExist"
+                        }
+                    }
+                }
+            }
+        },
+        "parameterreference": {
+            "post": {
+                "summary": "Parameter reference",
+                "description": "Tests using a parameter reference object",
+                "parameters": [{
+                        "$ref": "#/parameters/commonParam"
+                    }],
+                "tags": ["Reference Testing"],
+                "responses": {
+                    "200": {
+                        "description": "Query result"
+                    }
+                }
+            }
+        },
+        "responsereference": {
+            "post": {
+                "summary": "Response reference",
+                "description": "Tests using a response reference object",
+                "parameters": [{
+                        "name": "body",
+                        "in": "body",
+                        "description": "Body of request",
+                        "required": true,
+                        "type": "string"
+                    }],
+                "tags": ["Reference Testing"],
+                "responses": {
+                    "200": {
+                        "$ref": "#/definitions/OKResponse"
+                    },
+                    "400": {
+                        "$ref": "#/definitions/BadRequest"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "commonParam": {
+            "name": "common",
+            "in": "query",
+            "description": "A parameter commonly used so define at top parameter level",
+            "required": false,
+            "type": "string"
+        }
+    },
+    "definitions": {
+        "Circle": {
+            "required": ["q", "r"],
+            "properties": {
+                "q": {
+                    "type": "object",
+                    "$ref": "CurrentQuery"
+                },
+                "r": {
+                    "description": "result payload",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Balance"
+                    }
+                }
+            }
+        },
+        "Simple": {
+            "required": ["name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Nested": {
+            "required": ["name", "child"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "child": {
+                    "type": "object",
+                    "$ref": "#/definitions/Child"
+                }
+            }
+        },
+        "Child": {
+            "required": ["name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "grandchild": {
+                    "type": "object",
+                    "$ref": "#/definitions/Grandchild"
+                }
+            }
+        },
+        "Grandchild": {
+            "required": ["name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Descendant": {
+            "required": ["name", "child"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "child": {
+                    "type": "object",
+                    "$ref": "#/definitions/Descendant"
+                }
+            }
+        },
+        "Phonebook": {
+            "required": ["q", "r"],
+            "properties": {
+                "q": {
+                    "description": "Echos request",
+                    "type": "object",
+                    "$ref": "PhonebookQuery"
+                },
+                "r": {
+                    "description": "Query result",
+                    "type": "array",
+                    "items": {
+                        "$ref": "Person"
+                    }
+                }
+            }
+        },
+        "PhonebookQuery": {
+            "required": ["name"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "Person": {
+            "required": ["name", "phone"],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the person"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "The person's phone number"
+                },
+                "address": {
+                    "type": "string",
+                    "description": "The person's address"
+                }
+            }
+        },
+        "OKResponse": {
+            "description": "Query result using an inline schema",
+            "schema": {
+                "required": ["status", "message"],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "description": "The status code"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "description": "The status message"
+                    }
+                }
+            }
+        },
+        "BadRequest": {
+            "description": "Query result using a referenced schema",
+            "schema": {
+                "$ref": "#/definitions/StandardResponse"
+            }
+        },
+        "StandardResponse": {
+            "required": ["status", "message"],
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "description": "The status code"
+                },
+                "phone": {
+                    "type": "string",
+                    "description": "The status message"
+                }
+            }
+        }
+    }
+}

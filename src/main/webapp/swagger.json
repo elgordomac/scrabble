@@ -1,0 +1,115 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Scrabble",
+        "description": "Scrabble and anagram solver",
+        "version": "1.0.0"
+    },
+    "host": "scrabble.w6yk3gbhx6.us-east-1.elasticbeanstalk.com",
+    "basePath": "/api/scrabble/v1/",
+    "schemes": ["https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "anagram": {
+            "post": {
+                "summary": "Solves an anagram",
+                "description": "Solves an anagram in various different ways",
+                "schema": {
+                    "properties": {
+                        "anagram": {
+                            "type": "string"
+                        },
+                        "count": {
+                            "description": "The value of b, a natural number",
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["anagram"]
+                },
+                "tags": ["Anagrams"],
+                "responses": {
+                    "200": {
+                        "description": "The output"
+                    }
+                }
+            }
+        },
+        "scrabble": {
+            "post": {
+                "summary": "Calculates the best move in Scrabble",
+                "description": "Calculates the best possible move in a games of Scrabble or Words With Friends",
+                "schema": {
+                    "properties": {
+                        "board": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "rack": {
+                            "description": "The rack of letters",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["board"]
+                },
+                "examples": [
+                    {
+                        "name": "Simple",
+                        "parameters": {
+                            "body": {
+                                "board": ["               ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "      biz      ",
+                                    "      o        ",
+                                    "      to       ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "               ",
+                                    "               "],
+                                "rack": "oo"
+                            }
+                        }
+                    },
+                    {
+                        "name": "Medium",
+                        "parameters": {
+                            "body": {
+                                "board": ["   p       j   ",
+                                    "dozens  vigas  ",
+                                    "i  a t    om   ",
+                                    "v  c e t  os   ",
+                                    "a  e aura s    ",
+                                    "s    m edged   ",
+                                    "       n       ",
+                                    "       carps   ",
+                                    "       h   q   ",
+                                    "           u   ",
+                                    "           i   ",
+                                    "           b   ",
+                                    "               ",
+                                    "               ",
+                                    "               "],
+                                "rack": "rrkdnlo"
+                            }
+                        }
+                    }
+                ],
+                "tags": ["Scrabble"],
+                "responses": {
+                    "200": {
+                        "description": "The output"
+                    }
+                }
+            }
+        }
+    }
+}
